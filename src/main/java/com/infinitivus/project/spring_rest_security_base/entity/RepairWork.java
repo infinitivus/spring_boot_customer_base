@@ -36,17 +36,6 @@ public class RepairWork {
             inverseJoinColumns = @JoinColumn(name = "spare_parts_id"))
     private List<SpareParts> sparePartsList;
 
-    public RepairWork() {
-    }
-
-    public RepairWork(int id, String nameTheWork, String master, long costWork, String date) {
-        this.id = id;
-        this.nameTheWork = nameTheWork;
-        this.master = master;
-        this.costWork = costWork;
-        this.date = date;
-    }
-
     public void addSparePartsToRepairWork(SpareParts spareParts) {
         if (sparePartsList == null) {
             sparePartsList = new ArrayList<>();

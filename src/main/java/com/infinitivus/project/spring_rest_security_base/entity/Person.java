@@ -36,16 +36,16 @@ public class Person {
     @JoinColumn(name = "mobile_home_id")
     private MobileHome mobileHome;
 
-    public Person() {
-    }
-
-    public Person(String surname, String name, String phoneNumber, String email, String birthday) {
-        this.surname = surname;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.birthday = birthday;
-    }
+//    public Person() {
+//    }
+//
+//    public Person(String surname, String name, String phoneNumber, String email, String birthday) {
+//        this.surname = surname;
+//        this.name = name;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.birthday = birthday;
+//    }
 
     public Integer getId() {
         return id;
