@@ -1,4 +1,4 @@
-package com.infinitivus.project.spring_rest_security_base.entity;
+package com.infinitivus.project.spring_rest_security_base.entity.person;
 
 import javax.persistence.*;
 //import javax.validation.constraints.Pattern;

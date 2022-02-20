@@ -1,6 +1,6 @@
 package com.infinitivus.project.spring_rest_security_base.repository;
 
-import com.infinitivus.project.spring_rest_security_base.entity.RepairWork;
+import com.infinitivus.project.spring_rest_security_base.entity.person.RepairWork;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

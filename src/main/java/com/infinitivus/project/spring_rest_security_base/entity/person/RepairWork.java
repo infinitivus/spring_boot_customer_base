@@ -1,6 +1,4 @@
-package com.infinitivus.project.spring_rest_security_base.entity;
-
-import org.hibernate.annotations.Cascade;
+package com.infinitivus.project.spring_rest_security_base.entity.person;
 
 import javax.persistence.*;
 import java.util.ArrayList;
