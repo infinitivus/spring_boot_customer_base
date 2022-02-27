@@ -1,7 +1,9 @@
 package com.infinitivus.project.spring_rest_security_base.service.person_service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.infinitivus.project.spring_rest_security_base.entity.person.Person;
-import com.jayway.jsonpath.JsonPath;
 
 import java.util.List;
 
@@ -13,11 +15,11 @@ public interface IPersonService {
 
     List<Person> allPerson();
 
-    List<Person> searchPerson(String searchLine);
+   List<Person> searchPerson(String line);
 
-    List<Person> sortPerson(String sortLine);
+    List<Person> sortPerson(String field);
 
     void deletePerson(Integer id);
 
-//    Person applyPatchToPerson(JsonPath patch, Person person);
+   Person applyPatchToPerson(JsonPatch patch, Person person) throws JsonPatchException, JsonProcessingException;
 }

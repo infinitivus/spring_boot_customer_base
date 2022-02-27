@@ -21,171 +21,125 @@ public class PersonController {
     @Autowired
     private IPersonService personService;
 
-    //Создание нового клиента
+    //Создание нового клиента ok
     @PostMapping("/create")
     public ResponseEntity<String> createPerson(@RequestBody Person person) {
-        ResponseEntity<String> resp = null;
+        ResponseEntity<String> resp;
         try {
             Person pers = personService.savePerson(person);
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Person '" + person.getId() + "' created:" + pers.toString(), HttpStatus.CREATED); //201
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to save person",
                     HttpStatus.INTERNAL_SERVER_ERROR); //500
         }
         return resp;
     }
 
-    // Вывод всех пользователей с ролями на консоль
+    // Вывод всех клиентов на консоль ok
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllPerson() {
-        ResponseEntity<?> resp = null;
+        ResponseEntity<?> resp;
         try {
             List<Person> list = personService.allPerson();
-            resp = new ResponseEntity<List<Person>>(list, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to get all person",
                     HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
-    @GetMapping("/getAllSort/sort")
-    public ResponseEntity<?> getAllSortPerson(@PathVariable String sort) {
-        ResponseEntity<?> resp = null;
+    // Вывод всех отсортированных клиентов по полю(name,surname,email,) ok
+    // http://localhost:8080/persons/sort/surname
+    @GetMapping("/sort/{line}")
+    public ResponseEntity<?> getAllSortPerson(@PathVariable String line) {
+        ResponseEntity<?> resp;
         try {
-            List<Person> list = personService.sortPerson(sort);
-            resp = new ResponseEntity<List<Person>>(list, HttpStatus.OK);//200
+            List<Person> list = personService.sortPerson(line);
+            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to get all sort person",
                     HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
-    @GetMapping("/getAllSearch/search")
-    public ResponseEntity<?> getAllSearchPerson(@PathVariable String search) {
-        ResponseEntity<?> resp = null;
+ //    Поск клиента по строке
+    @GetMapping("/search/{line}")
+    public ResponseEntity<?> getAllSearchPerson(@PathVariable String line) {
+        ResponseEntity<?> resp;
         try {
-            List<Person> list = personService.searchPerson(search);
-            resp = new ResponseEntity<List<Person>>(list, HttpStatus.OK);//200
+            List<Person> list = personService.searchPerson(line);
+            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to get all search person",
                     HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
-    // получение одного клиента по id
+    // получение одного клиента по id ok
     @GetMapping("/getPerson/{id}")
     public ResponseEntity<?> getOnePerson(@PathVariable Integer id) {
-        ResponseEntity<?> resp = null;
+        ResponseEntity<?> resp;
         try {
             Person person = personService.getPerson(id);
-            resp = new ResponseEntity<Person>(person, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(person, HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to find person",
                     HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
-    // Удаление пользователя ok
+    // Удаление клиента  ok
     @DeleteMapping("remove/{id}")
     public ResponseEntity<String> deletePerson(@PathVariable Integer id) {
-        ResponseEntity<String> resp = null;
+        ResponseEntity<String> resp;
         try {
             personService.deletePerson(id);
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Person '" + id + "' deleted", HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to delete person", HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
-    //  изменение данных клиента по id
+    //  изменение данных клиента по id  ok
     @PatchMapping(path = "/modify/{id}")
     public ResponseEntity<String> updatePerson(@PathVariable Integer id, @RequestBody JsonPatch patch) {
-        ResponseEntity<String> resp = null;
+        ResponseEntity<String> resp ;
         try {
             Person person = personService.getPerson(id);
-            Person personPatched=applyPatchToPerson(patch,person);
+            Person personPatched=personService.applyPatchToPerson(patch,person);
             personService.savePerson(personPatched);
-            resp = new ResponseEntity<String>(
-                    "Person '" + personPatched.getId() + "' updated:",
+            resp = new ResponseEntity<>(
+                    "Person '" + personPatched.getId() + "' updated:"+ personPatched,
                     HttpStatus.PARTIAL_CONTENT); //206
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to update person",
                     HttpStatus.INTERNAL_SERVER_ERROR); //500
         }
         return resp;
     }
-
-    private Person applyPatchToPerson(JsonPatch patch, Person person) throws JsonPatchException, JsonProcessingException {
-        ObjectMapper objectMapper=new ObjectMapper();
-        JsonNode patched = patch.apply(objectMapper.convertValue(person, JsonNode.class));
-        return objectMapper.treeToValue(patched, Person.class);
-    }
 }
 
-//    // Редактирование данных пользователя
-//    @PutMapping("/modify/{id}")
-//    public ResponseEntity<String> modifyUser(@RequestBody UserData user,@PathVariable Integer id) {
-//        ResponseEntity<String> resp = null;
-//        try {
-//            userService.updateUser(user,id);
-//            resp = new ResponseEntity<String>(
-//                    "User '"+ id+"' updated",
-//                    HttpStatus.RESET_CONTENT); //205
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resp = new ResponseEntity<String>(
-//                    "Unable to update user",
-//                    HttpStatus.INTERNAL_SERVER_ERROR); //500
-//        }
-//        return resp;
-//    }
-
-/**
- * To update one Invoice just like where clause condition, updates Invoice object & returns Status as ResponseEntity<String>
- */
-//    @PatchMapping("/modify/{id}/{number}")
-//    public ResponseEntity<String> updateInvoiceNumberById(
-//            @PathVariable Long id,
-//            @PathVariable String number
-//    ) {
-//        ResponseEntity<String> resp = null;
-//        try {
-//            service.updateInvoiceNumberById(number, id);
-//            resp = new ResponseEntity<String>(
-//                    "Invoice '" + number + "' Updated",
-//                    HttpStatus.PARTIAL_CONTENT); //206- Reset-Content(PUT)
-//
-//        } catch (InvoiceNotFoundException pne) {
-//            throw pne; // re-throw exception to handler
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resp = new ResponseEntity<String>(
-//                    "Unable to Update Invoice",
-//                    HttpStatus.INTERNAL_SERVER_ERROR); //500-ISE
-//        }
-//        return resp;
-//    }
 
 
 

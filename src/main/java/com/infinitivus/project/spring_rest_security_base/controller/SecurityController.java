@@ -99,47 +99,4 @@ public class SecurityController {
     }
 }
 
-//    // Редактирование данных пользователя
-//    @PutMapping("/modify/{id}")
-//    public ResponseEntity<String> modifyUser(@RequestBody UserData user,@PathVariable Integer id) {
-//        ResponseEntity<String> resp = null;
-//        try {
-//            userService.updateUser(user,id);
-//            resp = new ResponseEntity<String>(
-//                    "User '"+ id+"' updated",
-//                    HttpStatus.RESET_CONTENT); //205
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resp = new ResponseEntity<String>(
-//                    "Unable to update user",
-//                    HttpStatus.INTERNAL_SERVER_ERROR); //500
-//        }
-//        return resp;
-//    }
-
-/**
- * To update one Invoice just like where clause condition, updates Invoice object & returns Status as ResponseEntity<String>
- */
-//    @PatchMapping("/modify/{id}/{number}")
-//    public ResponseEntity<String> updateInvoiceNumberById(
-//            @PathVariable Long id,
-//            @PathVariable String number
-//    ) {
-//        ResponseEntity<String> resp = null;
-//        try {
-//            service.updateInvoiceNumberById(number, id);
-//            resp = new ResponseEntity<String>(
-//                    "Invoice '" + number + "' Updated",
-//                    HttpStatus.PARTIAL_CONTENT); //206- Reset-Content(PUT)
-//
-//        } catch (InvoiceNotFoundException pne) {
-//            throw pne; // re-throw exception to handler
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resp = new ResponseEntity<String>(
-//                    "Unable to Update Invoice",
-//                    HttpStatus.INTERNAL_SERVER_ERROR); //500-ISE
-//        }
-//        return resp;
-//    }
 

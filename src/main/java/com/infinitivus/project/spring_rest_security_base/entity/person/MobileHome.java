@@ -38,9 +38,9 @@ public class MobileHome {
     @Column(name = "license_plate")
 //    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,15}$", message = "Error! Enter the sample data")
     private String licensePlate;
-
-    @OneToOne(mappedBy = "mobileHome")
-    private Person homePerson;
+//
+//    @OneToOne(mappedBy = "mobileHome")
+//    private Person homePerson;
 
     @OneToMany(mappedBy = "mobileHomeRepair", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Set<RepairWork> repairWorkList;
@@ -48,7 +48,7 @@ public class MobileHome {
     public MobileHome() {
     }
 
-    public MobileHome(Integer id, String type, String brand, String model, String vin, String yearOfRelease, String licensePlate, Person homePerson) {
+    public MobileHome(Integer id, String type, String brand, String model, String vin, String yearOfRelease, String licensePlate) {
         this.id = id;
         this.type = type;
         this.brand = brand;
@@ -56,7 +56,7 @@ public class MobileHome {
         this.vin = vin;
         this.yearOfRelease = yearOfRelease;
         this.licensePlate = licensePlate;
-        this.homePerson = homePerson;
+//        this.homePerson = homePerson;
     }
 
     public RepairWork addRepairWorkToMobileHome(RepairWork repairWork) {
@@ -123,14 +123,14 @@ public class MobileHome {
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
-
-    public Person getHomePerson() {
-        return homePerson;
-    }
-
-    public void setHomePerson(Person homePerson) {
-        this.homePerson = homePerson;
-    }
+//
+//    public Person getHomePerson() {
+//        return homePerson;
+//    }
+//
+//    public void setHomePerson(Person homePerson) {
+//        this.homePerson = homePerson;
+//    }
 
     public Set<RepairWork> getRepairWorkList() {
         return repairWorkList;
@@ -138,6 +138,19 @@ public class MobileHome {
 
     public void setRepairWorkList(Set<RepairWork> repairWorkList) {
         this.repairWorkList = repairWorkList;
+    }
+
+    @Override
+    public String toString() {
+        return "MobileHome{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", vin='" + vin + '\'' +
+                ", yearOfRelease='" + yearOfRelease + '\'' +
+                ", licensePlate='" + licensePlate + '\'' +
+                '}';
     }
 }
 

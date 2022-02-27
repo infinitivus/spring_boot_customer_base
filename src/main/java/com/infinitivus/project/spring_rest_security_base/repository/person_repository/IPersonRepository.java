@@ -10,9 +10,6 @@ import java.util.List;
 @Repository
 public interface IPersonRepository extends JpaRepository<Person,Integer> {
 
-    @Query("from Person where surname=?1 or name=?1 or phoneNumber=?1 or email=?1")
-    public List<Person> searchPerson(String searchLine);
-
-    @Query("from Person order by ?1 ")
-    public List<Person> sortPerson(String sortLine);
+    List<Person> findByNameOrSurnameOrEmailOrPhoneNumberOrBirthday
+            (String name,String surname,String email,String phoneNumber,String birthday);
 }
