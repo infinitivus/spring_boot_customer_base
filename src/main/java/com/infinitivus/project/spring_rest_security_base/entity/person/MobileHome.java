@@ -1,9 +1,12 @@
 package com.infinitivus.project.spring_rest_security_base.entity.person;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 //import javax.validation.constraints.Pattern;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 @Entity
@@ -38,17 +41,20 @@ public class MobileHome {
     @Column(name = "license_plate")
 //    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,15}$", message = "Error! Enter the sample data")
     private String licensePlate;
-//
-//    @OneToOne(mappedBy = "mobileHome")
-//    private Person homePerson;
 
-    @OneToMany(mappedBy = "mobileHomeRepair", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    private Set<RepairWork> repairWorkList;
+    @OneToOne(mappedBy = "mobileHome")
+    private Person homePerson;
+
+    @OneToMany(mappedBy = "mobileHomeRepair", cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    private List<RepairWork> repairWorkList;
 
     public MobileHome() {
     }
 
-    public MobileHome(Integer id, String type, String brand, String model, String vin, String yearOfRelease, String licensePlate) {
+    public MobileHome(Integer id, String type, String brand, String model,
+                      String vin, String yearOfRelease, String licensePlate,
+                      Person homePerson, List<RepairWork> repairWorkList) {
         this.id = id;
         this.type = type;
         this.brand = brand;
@@ -56,12 +62,13 @@ public class MobileHome {
         this.vin = vin;
         this.yearOfRelease = yearOfRelease;
         this.licensePlate = licensePlate;
-//        this.homePerson = homePerson;
+        this.homePerson = homePerson;
+        this.repairWorkList = repairWorkList;
     }
 
     public RepairWork addRepairWorkToMobileHome(RepairWork repairWork) {
         if (repairWorkList == null) {
-            repairWorkList = new HashSet<>();
+            repairWorkList = new ArrayList<>();
         }
         repairWorkList.add(repairWork);
         repairWork.setMobileHomeRepair(this);
@@ -123,34 +130,14 @@ public class MobileHome {
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
-//
-//    public Person getHomePerson() {
-//        return homePerson;
-//    }
-//
-//    public void setHomePerson(Person homePerson) {
-//        this.homePerson = homePerson;
-//    }
 
-    public Set<RepairWork> getRepairWorkList() {
+    @JsonManagedReference
+    public List<RepairWork> getRepairWorkList() {
         return repairWorkList;
     }
 
-    public void setRepairWorkList(Set<RepairWork> repairWorkList) {
+    public void setRepairWorkList(List<RepairWork> repairWorkList) {
         this.repairWorkList = repairWorkList;
-    }
-
-    @Override
-    public String toString() {
-        return "MobileHome{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", vin='" + vin + '\'' +
-                ", yearOfRelease='" + yearOfRelease + '\'' +
-                ", licensePlate='" + licensePlate + '\'' +
-                '}';
     }
 }
 

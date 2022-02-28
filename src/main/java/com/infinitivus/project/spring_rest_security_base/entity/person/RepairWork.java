@@ -1,5 +1,7 @@
 package com.infinitivus.project.spring_rest_security_base.entity.person;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class RepairWork {
     @Column(name = "date")
     private String date;
 
-    @ManyToOne( fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "home_id")
     private MobileHome mobileHomeRepair;
 
@@ -81,6 +83,7 @@ public class RepairWork {
         this.date = date;
     }
 
+    @JsonBackReference
     public MobileHome getMobileHomeRepair() {
         return mobileHomeRepair;
     }
@@ -96,6 +99,5 @@ public class RepairWork {
     public void setSparePartsList(List<SpareParts> sparePartsList) {
         this.sparePartsList = sparePartsList;
     }
-
 }
 

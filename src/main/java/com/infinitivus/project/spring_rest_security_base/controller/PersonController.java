@@ -1,10 +1,6 @@
 package com.infinitivus.project.spring_rest_security_base.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import com.infinitivus.project.spring_rest_security_base.entity.person.Person;
 import com.infinitivus.project.spring_rest_security_base.service.person_service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +18,8 @@ public class PersonController {
     private IPersonService personService;
 
     //Создание нового клиента ok
+    // POST http://localhost:8080/persons/create
+    // {"name":"AAAAA","surname":"AAAAAA","mobileHome":{"model":"ZZZZZZ","brand":"ZZZZZZ"}}
     @PostMapping("/create")
     public ResponseEntity<String> createPerson(@RequestBody Person person) {
         ResponseEntity<String> resp;
@@ -39,6 +37,7 @@ public class PersonController {
     }
 
     // Вывод всех клиентов на консоль ok
+   // GET http://localhost:8080/persons/getAll
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllPerson() {
         ResponseEntity<?> resp;
@@ -55,7 +54,7 @@ public class PersonController {
     }
 
     // Вывод всех отсортированных клиентов по полю(name,surname,email,) ok
-    // http://localhost:8080/persons/sort/surname
+    // GET http://localhost:8080/persons/sort/surname
     @GetMapping("/sort/{line}")
     public ResponseEntity<?> getAllSortPerson(@PathVariable String line) {
         ResponseEntity<?> resp;
@@ -71,7 +70,8 @@ public class PersonController {
         return resp;
     }
 
- //    Поск клиента по строке
+ //    Поск клиента по строке ok
+//  GET  http://localhost:8080/persons/search/alex
     @GetMapping("/search/{line}")
     public ResponseEntity<?> getAllSearchPerson(@PathVariable String line) {
         ResponseEntity<?> resp;
@@ -88,6 +88,7 @@ public class PersonController {
     }
 
     // получение одного клиента по id ok
+    //GET http://localhost:8080/persons/getPerson/1
     @GetMapping("/getPerson/{id}")
     public ResponseEntity<?> getOnePerson(@PathVariable Integer id) {
         ResponseEntity<?> resp;
@@ -104,6 +105,7 @@ public class PersonController {
     }
 
     // Удаление клиента  ok
+    // DELETE http://localhost:8080/persons/remove/1
     @DeleteMapping("remove/{id}")
     public ResponseEntity<String> deletePerson(@PathVariable Integer id) {
         ResponseEntity<String> resp;
@@ -120,6 +122,8 @@ public class PersonController {
     }
 
     //  изменение данных клиента по id  ok
+    //PATCH http://localhost:8080/persons/modify/1
+    // [{"op":"replace","path":"/name","value":"BBBBBB"}]
     @PatchMapping(path = "/modify/{id}")
     public ResponseEntity<String> updatePerson(@PathVariable Integer id, @RequestBody JsonPatch patch) {
         ResponseEntity<String> resp ;
@@ -139,18 +143,3 @@ public class PersonController {
         return resp;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

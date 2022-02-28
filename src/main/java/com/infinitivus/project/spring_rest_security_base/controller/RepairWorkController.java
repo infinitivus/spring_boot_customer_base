@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/repairWorks")
 public class RepairWorkController {
 
     @Autowired
     private IRepairWorkService repairWorkService;
 
-    //Создание новой записи ремонта
-    @PostMapping("/create")
-    public ResponseEntity<String> createRepairWork(@RequestBody RepairWork repairWork) {
+//    Создание новой записи ремонта для автодома с id ok
+//     POST http://localhost:8080/repairWorks/create/1
+    @PostMapping("/create/{homeId}")
+    public ResponseEntity<String> createRepairWork(@RequestBody RepairWork repairWork,@PathVariable Integer homeId) {
         ResponseEntity<String> resp;
         try {
-            RepairWork work = repairWorkService.saveRepairWork(repairWork);
+            RepairWork work = repairWorkService.saveRepairWork(repairWork,homeId);
             resp = new ResponseEntity<>(
                     "RepairWork '" + repairWork.getId() + "' created:" + work.toString(), HttpStatus.CREATED); //201
         } catch (Exception e) {
@@ -33,13 +35,14 @@ public class RepairWorkController {
         return resp;
     }
 
-    // Вывод списка всех ремонтов
+//     Вывод списка всех ремонтов ok
+//     GET  http://localhost:8080/repairWorks/getAll
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllRepairWork() {
         ResponseEntity<?> resp;
         try {
-            List<RepairWork> list = repairWorkService.allRepairWork();
-            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
+            List<RepairWork> repairWork = repairWorkService.allRepairWork();
+            resp = new ResponseEntity<>(repairWork, HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
@@ -49,23 +52,25 @@ public class RepairWorkController {
         return resp;
     }
 
-    // получение ремонтов тс по id автодома
+//     получение ремонтов по id автодома ок
+//     GET http://localhost:8080/repairWorks/getWorks/1
     @GetMapping("/getWorks/{homeId}")
     public ResponseEntity<?> getRepairWork(@PathVariable Integer homeId) {
         ResponseEntity<?> resp;
         try {
-            RepairWork repairWork = repairWorkService.getRepairWork(homeId);
+            List<RepairWork>  repairWork= repairWorkService.getRepairWork(homeId);
             resp = new ResponseEntity<>(repairWork, HttpStatus.OK);//200
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
-                    "Unable to find repair work",
+                    "Unable to find repair work by id mobile home",
                     HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
-    // Удаление информации о ремонте
+//     Удаление информации о ремонте по id ok
+//     DELETE http://localhost:8080/repairWorks/remove/1
     @DeleteMapping("remove/{id}")
     public ResponseEntity<String> deleteRepairWork(@PathVariable Integer id) {
         ResponseEntity<String> resp;
@@ -81,14 +86,16 @@ public class RepairWorkController {
         return resp;
     }
 
-    //  изменение данных о ремонте
+//      изменение данных о ремонте ok
+//    http://localhost:8080/repairWorks/modify/1
+//    [{"op":"replace", "path":"/nameTheWork", "value":"rabota"}]
     @PatchMapping(path = "/modify/{id}")
     public ResponseEntity<String> updateRepairWork(@PathVariable Integer id, @RequestBody JsonPatch patch) {
         ResponseEntity<String> resp ;
         try {
-            RepairWork repairWork = repairWorkService.getRepairWork(id);
+            RepairWork repairWork = repairWorkService.getOneWork(id);
             RepairWork repairWorkPatched=repairWorkService.applyPatchToRepairWork(patch,repairWork);
-            repairWorkService.saveRepairWork(repairWorkPatched);
+            repairWorkService.updateWork(repairWorkPatched);
             resp = new ResponseEntity<>(
                     "RepairWork '" + repairWorkPatched.getId() + "' updated:"+ repairWorkPatched,
                     HttpStatus.PARTIAL_CONTENT); //206
