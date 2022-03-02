@@ -1,6 +1,11 @@
 package com.infinitivus.project.spring_rest_security_base.entity.person;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +17,16 @@ public class SpareParts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(max = 100, message = "Error! Enter the sample data")
     @Column(name="name_spare_part")
     private String nameSparePart;
 
+    @Min(value = 0, message = "Error !")
+    @Max(value = 999999999, message = "Error !")
     @Column(name="cost_part")
     private long costPart;
 
+    @Size(max = 10, message = "Error!")
     @Column(name="article")
     private String article;
 
@@ -62,7 +71,7 @@ public class SpareParts {
     public void setArticle(String article) {
         this.article = article;
     }
-
+        @JsonBackReference
     public List<RepairWork> getRepairWorkList() {
         return repairWorkList;
     }

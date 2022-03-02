@@ -2,7 +2,6 @@ package com.infinitivus.project.spring_rest_security_base.repository.person_repo
 
 import com.infinitivus.project.spring_rest_security_base.entity.person.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

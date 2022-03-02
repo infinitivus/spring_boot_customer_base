@@ -15,7 +15,9 @@ public class SecurityController {
     @Autowired
     private IUserService userService;
 
-    //Создание нового пользователя с ролью User ok
+    //Creating a new user with the User role
+// POST http://localhost:8080/registration
+//     {"user":"USER","password":"PASSWORD"}
     @PostMapping("/registration")
     public ResponseEntity<String> createUser(@RequestBody UserData user) {
         ResponseEntity<String> resp = null;
@@ -32,8 +34,9 @@ public class SecurityController {
         return resp;
     }
 
-    // Вывод всех пользователей с ролями на консоль ok
-    @GetMapping("/user/getAllUser")
+    // Output of all users with roles to the console
+// GET http://localhost:8080/userDatas/getAll
+    @GetMapping("/userDatas/getAll")
     public ResponseEntity<?> getAllUser() {
         ResponseEntity<?> resp = null;
         try {
@@ -48,8 +51,9 @@ public class SecurityController {
         return resp;
     }
 
-    // получение одного пользователя по id ok
-    @GetMapping("/user/getUser/{id}")
+    // getting one user by id
+// GET http://localhost:8080/userDatas/getUser/1
+    @GetMapping("/userDatas/getUser/{id}")
     public ResponseEntity<?> getOneInvoice(@PathVariable Integer id) {
         ResponseEntity<?> resp = null;
         try {
@@ -64,8 +68,9 @@ public class SecurityController {
         return resp;
     }
 
-    // Удаление пользователя ok
-    @DeleteMapping("/user/remove/{id}")
+    //   Deleting a user
+//DELETE http://localhost:8080/userDatas/remove/1
+    @DeleteMapping("/userDatas/remove/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
         ResponseEntity<String> resp = null;
         try {
@@ -80,8 +85,9 @@ public class SecurityController {
         return resp;
     }
 
-    //  присвоение роли пользователю по ID ok
-    @PatchMapping("/user/modify/{id}/{role}")
+    //  assigning a role to a user by ID
+//PATCH http://localhost:8080/userDatas/modify/3/ROLE_ADMIN
+    @PatchMapping("/userDatas/modify/{id}/{role}")
     public ResponseEntity<String> modifyUser(@PathVariable Integer id, @PathVariable String role) {
         ResponseEntity<String> resp = null;
         try {

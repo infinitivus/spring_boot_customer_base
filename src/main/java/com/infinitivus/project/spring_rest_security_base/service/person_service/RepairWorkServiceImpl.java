@@ -40,8 +40,10 @@ public class RepairWorkServiceImpl implements IRepairWorkService {
     }
 
     @Override
-    public RepairWork updateWork(RepairWork repairWork){
-        return  repairWorkRepository.save(repairWork);
+    public RepairWork updateWork(Integer id,JsonPatch patch) throws JsonPatchException, JsonProcessingException {
+        RepairWork repairWork = getOneWork(id);
+        RepairWork repairWorkPatched=applyPatchToRepairWork(patch,repairWork);
+        return  repairWorkRepository.save(repairWorkPatched);
     }
 
     @Override

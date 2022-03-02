@@ -1,5 +1,7 @@
 package com.infinitivus.project.spring_rest_security_base.entity.security;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,12 +14,13 @@ public class UserData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Length(min = 3,max = 20,message = "Error")
     private String username;
 
     @Column(nullable = false, length = 64)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "userdata_userrole", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<UserRole> roles = new HashSet<>();
@@ -35,7 +38,7 @@ public class UserData {
         this.roles.add(role);
     }
 
-    public void clearRole(){
+    public void clearRole() {
         roles.clear();
     }
 

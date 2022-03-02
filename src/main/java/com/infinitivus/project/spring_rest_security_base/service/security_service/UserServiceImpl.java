@@ -19,41 +19,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IRoleRepository roleRepository;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-//    @Override
-//    public boolean verificationSchema() {
-//        List<UserData> allUser = listAllUser();
-//        if (allUser.isEmpty()) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public void createRoles() {
-//        UserRole admin = new UserRole("ROLE_ADMIN");
-//        UserRole master = new UserRole("ROLE_MASTER");
-//        UserRole manager = new UserRole("ROLE_MANAGER");
-//        roleRepository.save(admin);
-//        roleRepository.save(master);
-//        roleRepository.save(manager);
-//    }
-
-//    @Override
-//    public void saveAdmin(UserData user) {
-//        UserRole roleAdmin = roleRepository.findByRole("ROLE_ADMIN");
-//        encoder(user);
-//        user.addRole(roleAdmin);
-//        userRepository.save(user);
-//    }
-
-//    @Override
-//    public UserData findByUsername(String username) {
-//        return userRepository.findByUsername(username);
-//    }
-
 
     @Override
     public List<UserData> listAllUser() {
@@ -65,7 +30,6 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findById(id).get();
     }
 
-    // Save new user
     @Override
     public Integer registrationUser(UserData user) {
         UserRole roleUser = roleRepository.findByRole("ROLE_USER");
@@ -85,6 +49,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     public void encoder(UserData user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 

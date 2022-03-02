@@ -17,128 +17,126 @@ public class PersonController {
     @Autowired
     private IPersonService personService;
 
-    //Создание нового клиента ok
-    // POST http://localhost:8080/persons/create
-    // {"name":"AAAAA","surname":"AAAAAA","mobileHome":{"model":"ZZZZZZ","brand":"ZZZZZZ"}}
+    // Creating a new client
+//     POST http://localhost:8080/persons/create
+//     {"name":"AAAAA","surname":"AAAAAA","mobileHome":{"model":"ZZZZZZ","brand":"ZZZZZZ"}}
     @PostMapping("/create")
     public ResponseEntity<String> createPerson(@RequestBody Person person) {
         ResponseEntity<String> resp;
         try {
-            Person pers = personService.savePerson(person);
+            personService.savePerson(person);
             resp = new ResponseEntity<>(
-                    "Person '" + person.getId() + "' created:" + pers.toString(), HttpStatus.CREATED); //201
+                    "Person '" + person.getId() + "' created:", HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
                     "Unable to save person",
-                    HttpStatus.INTERNAL_SERVER_ERROR); //500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
-    // Вывод всех клиентов на консоль ok
-   // GET http://localhost:8080/persons/getAll
+    // Output of all clients
+//    GET http://localhost:8080/persons/getAll
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllPerson() {
         ResponseEntity<?> resp;
         try {
-            List<Person> list = personService.allPerson();
-            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
+            List<Person> pers = personService.allPerson();
+            resp = new ResponseEntity<>(pers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
                     "Unable to get all person",
-                    HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
-    // Вывод всех отсортированных клиентов по полю(name,surname,email,) ok
-    // GET http://localhost:8080/persons/sort/surname
+    // Output of all sorted clients by field(name,surname,email)
+//     GET http://localhost:8080/persons/sort/surname
     @GetMapping("/sort/{line}")
     public ResponseEntity<?> getAllSortPerson(@PathVariable String line) {
         ResponseEntity<?> resp;
         try {
             List<Person> list = personService.sortPerson(line);
-            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
                     "Unable to get all sort person",
-                    HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
- //    Поск клиента по строке ok
+    // Search for a client by the line
 //  GET  http://localhost:8080/persons/search/alex
     @GetMapping("/search/{line}")
     public ResponseEntity<?> getAllSearchPerson(@PathVariable String line) {
         ResponseEntity<?> resp;
         try {
             List<Person> list = personService.searchPerson(line);
-            resp = new ResponseEntity<>(list, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
                     "Unable to get all search person",
-                    HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
-    // получение одного клиента по id ok
-    //GET http://localhost:8080/persons/getPerson/1
+    // Getting one client by id
+//     GET http://localhost:8080/persons/getPerson/1
     @GetMapping("/getPerson/{id}")
     public ResponseEntity<?> getOnePerson(@PathVariable Integer id) {
         ResponseEntity<?> resp;
         try {
             Person person = personService.getPerson(id);
-            resp = new ResponseEntity<>(person, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(person, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
                     "Unable to find person",
-                    HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
-    // Удаление клиента  ok
-    // DELETE http://localhost:8080/persons/remove/1
+    // Deleting the client
+//     DELETE http://localhost:8080/persons/remove/1
     @DeleteMapping("remove/{id}")
     public ResponseEntity<String> deletePerson(@PathVariable Integer id) {
         ResponseEntity<String> resp;
         try {
             personService.deletePerson(id);
             resp = new ResponseEntity<>(
-                    "Person '" + id + "' deleted", HttpStatus.OK);//200
+                    "Person '" + id + "' deleted", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
-                    "Unable to delete person", HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    "Unable to delete person", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
-    //  изменение данных клиента по id  ok
-    //PATCH http://localhost:8080/persons/modify/1
-    // [{"op":"replace","path":"/name","value":"BBBBBB"}]
+    // changing client data by id
+//    PATCH http://localhost:8080/persons/modify/1
+//     [{"op":"replace","path":"/name","value":"BBBBBB"}]
     @PatchMapping(path = "/modify/{id}")
     public ResponseEntity<String> updatePerson(@PathVariable Integer id, @RequestBody JsonPatch patch) {
         ResponseEntity<String> resp ;
         try {
-            Person person = personService.getPerson(id);
-            Person personPatched=personService.applyPatchToPerson(patch,person);
-            personService.savePerson(personPatched);
+            Person person= personService.updatePerson(id,patch);
             resp = new ResponseEntity<>(
-                    "Person '" + personPatched.getId() + "' updated:"+ personPatched,
-                    HttpStatus.PARTIAL_CONTENT); //206
+                    "Person '" + person.getId() + "' updated:",
+                    HttpStatus.PARTIAL_CONTENT);
         } catch (Exception e) {
             e.printStackTrace();
             resp = new ResponseEntity<>(
                     "Unable to update person",
-                    HttpStatus.INTERNAL_SERVER_ERROR); //500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }

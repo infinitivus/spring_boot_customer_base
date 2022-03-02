@@ -49,6 +49,13 @@ public class PersonServiceImpl implements IPersonService{
         return personRepository.findAll(Sort.by(field));
     }
 
+    @Override
+    public Person updatePerson(Integer id,JsonPatch patch) throws JsonPatchException, JsonProcessingException {
+        Person person = getPerson(id);
+        Person personPatched=applyPatchToPerson(patch,person);
+        return personRepository.save(personPatched);
+    }
+
     public Person applyPatchToPerson(JsonPatch patch, Person person) throws JsonPatchException, JsonProcessingException {
         ObjectMapper objectMapper=new ObjectMapper();
         JsonNode patched = patch.apply(objectMapper.convertValue(person, JsonNode.class));

@@ -7,14 +7,6 @@ import java.util.List;
 
 public interface IUserService {
 
-//    void createRoles();
-
-//    boolean verificationSchema();
-
-//    void saveAdmin(UserData user);
-
-//    UserData findByUsername(String username);
-
     @Secured({"ROLE_ADMIN"})
     List<UserData> listAllUser();
 
@@ -24,7 +16,7 @@ public interface IUserService {
     @Secured({"ROLE_ADMIN"})
     void updateRoleToUser(Integer id, String userRole);
 
-// Любой может войти
+//  Available to a user without a role
     Integer registrationUser(UserData user);
 
     void encoder(UserData user);

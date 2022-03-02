@@ -1,12 +1,12 @@
 package com.infinitivus.project.spring_rest_security_base.entity.person;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-//import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 @Entity
@@ -19,37 +19,40 @@ public class MobileHome {
     private Integer id;
 
     @Column(name = "type")
-//    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,15}$", message = "Error! Enter the sample data")
+    @Pattern(regexp = "^(([А-ЯЁа-яё]|[A-Za-z]){3,15})?$", message = "Error! Enter the sample data")
     private String type;
 
     @Column(name = "brand")
-//    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,15}$", message = "Error! Enter the sample data")
+    @Pattern(regexp = "^(([А-ЯЁа-яё]|[A-Za-z]){3,15})?$", message = "Error! Enter the sample data")
     private String brand;
 
     @Column(name = "model")
-//    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,15}$", message = "Error! Enter the sample data")
+    @Pattern(regexp = "^(([А-ЯЁа-яё]|[A-Za-z]){3,15})?$", message = "Error! Enter the sample data")
     private String model;
 
     @Column(name = "vin")
-//    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,20}$", message = "Error! Enter the sample data")
+    @Length(max = 20,message = "Error! Enter the sample data")
     private String vin;
 
     @Column(name = "year_of_release")
-//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Error! Enter the sample data")
+    @Pattern(regexp = "^([1-9][0-9]{3})?$", message = "Error! Enter the sample data")
     private String yearOfRelease;
 
     @Column(name = "license_plate")
-//    @Pattern(regexp = "^([Рђ-РЇР°-СЏРЃС‘]|[A-Za-z]){3,15}$", message = "Error! Enter the sample data")
+    @Length(max = 14, message = "Error! Enter the sample data")
     private String licensePlate;
 
     @OneToOne(mappedBy = "mobileHome")
     private Person homePerson;
 
-    @OneToMany(mappedBy = "mobileHomeRepair", cascade =
-            {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "mobileHomeRepair", cascade = CascadeType.ALL)
     private List<RepairWork> repairWorkList;
 
     public MobileHome() {
+    }
+
+    public MobileHome(Integer id) {
+        this.id = id;
     }
 
     public MobileHome(Integer id, String type, String brand, String model,

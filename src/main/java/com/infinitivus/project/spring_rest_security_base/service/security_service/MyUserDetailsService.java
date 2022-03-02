@@ -21,7 +21,6 @@ public class MyUserDetailsService implements UserDetailsService {
     private IUserRepository userRepository;
 
     @Override
-//    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserData user = userRepository.findByUsername(username);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
