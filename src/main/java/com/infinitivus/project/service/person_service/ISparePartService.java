@@ -11,29 +11,29 @@ import java.util.List;
 
 public interface ISparePartService {
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     SpareParts saveSpareParts(SpareParts spareParts);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
     SpareParts getSpareParts(Integer id);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
     List<SpareParts> allSpareParts();
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
     List<SpareParts> searchSpareParts(String line);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     List<SpareParts> sortSpareParts();
 
-//    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN"})
     void deleteSpareParts(Integer id);
 
     SpareParts updateSpareParts(Integer id, JsonPatch patch) throws JsonPatchException, JsonProcessingException;
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     SpareParts applyPatchToSpareParts(JsonPatch patch, SpareParts spareParts) throws JsonPatchException, JsonProcessingException;
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     void addPartToWork(Integer workId, Integer partId);
 }

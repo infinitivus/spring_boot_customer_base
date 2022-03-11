@@ -3,7 +3,6 @@ package com.infinitivus.project.configuration;
 import com.infinitivus.project.service.security_service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/userDatas/**").hasRole("ADMIN")
+                .antMatchers("/users/**").hasRole("ADMIN")
                 .antMatchers("/persons/**").hasAnyRole("ADMIN","MANAGER")
-                .antMatchers("/repairWorks/**").hasAnyRole("ADMIN","MASTER")
-                .antMatchers("/spareParts/**").hasAnyRole("ADMIN","MASTER")
+                .antMatchers("/works/**").hasAnyRole("ADMIN","MASTER")
+                .antMatchers("/parts/**").hasAnyRole("ADMIN","MASTER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .and().httpBasic().realmName("MY APP REALM")
                 .authenticationEntryPoint(authenticationEntryPoint);

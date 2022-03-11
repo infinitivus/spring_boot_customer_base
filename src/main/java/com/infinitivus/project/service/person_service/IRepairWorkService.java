@@ -10,24 +10,24 @@ import java.util.List;
 
 public interface IRepairWorkService {
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     RepairWork saveRepairWork(RepairWork repairWork, Integer homeId);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     RepairWork getOneWork(Integer id);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     RepairWork updateWork(Integer id,JsonPatch patch) throws JsonPatchException, JsonProcessingException;
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
     List<RepairWork> getRepairWork(Integer homeId);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     List<RepairWork> allRepairWork();
 
-//    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN"})
     void deleteRepairWork(Integer workId);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN","ROLE_MASTER"})
     RepairWork applyPatchToRepairWork(JsonPatch patch, RepairWork repairWork) throws JsonPatchException, JsonProcessingException;
 }

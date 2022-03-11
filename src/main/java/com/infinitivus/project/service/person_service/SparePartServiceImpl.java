@@ -58,7 +58,7 @@ public class SparePartServiceImpl implements ISparePartService {
 
     @Override
     public List<SpareParts> sortSpareParts() {
-        return sparePartsRepository.findAll();
+        return sparePartsRepository.findAll(Sort.by("nameSparePart"));
     }
 
     @Override

@@ -21,11 +21,6 @@ public class PersonController {
 //     POST http://localhost:8080/persons/create
 //     {"name":"AAAAA","surname":"AAAAAA","mobileHome":{"model":"ZZZZZZ","brand":"ZZZZZZ"}}
     @PostMapping("/create")
-//    public Person addPerson(@RequestBody Person person){
-//        personService.savePerson(person);
-//        return person;
-//    }
-
     public ResponseEntity<String> createPerson(@RequestBody Person person) {
         ResponseEntity<String> resp;
         try {
@@ -44,11 +39,6 @@ public class PersonController {
     // Output of all clients
 //    GET http://localhost:8080/persons/getAll
     @GetMapping("/getAll")
-//    public List<Person> getAll(){
-//        List<Person> allPerson=personService.allPerson();
-//        return allPerson;
-//    }
-
     public ResponseEntity<?> getAllPerson() {
         ResponseEntity<?> resp;
         try {

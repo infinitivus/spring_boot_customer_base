@@ -46,9 +46,10 @@ public class MyJPAConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect",env.getProperty("hibernate.dialect"));
         properties.setProperty("hibernate.show_sql",env.getProperty("hibernate.show_sql"));
-        properties.setProperty("hibernate.hbm2ddl.auto",env.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.format_sql",env.getProperty("hibernate.format_sql"));
-        properties.getProperty("hibernate.id.new_generator_mappings",env.getProperty("hibernate.id.new_generator_mappings"));
+//        properties.setProperty("hibernate.hbm2ddl.auto",env.getProperty("hibernate.hbm2ddl.auto"));
+//        properties.getProperty("hibernate.id.new_generator_mappings",env.getProperty("hibernate.id.new_generator_mappings"));
+//        properties.getProperty("hibernate.enable_lazy_load_no_trans",env.getProperty("hibernate.enable_lazy_load_no_trans"));
         return properties;
     }
 

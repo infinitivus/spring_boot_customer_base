@@ -6,7 +6,7 @@ public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletI
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null; //new Class[]{SecurityConfig.class};
+        return null;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.infinitivus.project.entity.person;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 

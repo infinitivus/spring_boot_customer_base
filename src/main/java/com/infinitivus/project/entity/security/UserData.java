@@ -1,5 +1,6 @@
 package com.infinitivus.project.entity.security;
 
+import org.hibernate.annotations.Proxy;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user_data")
+@Proxy(lazy = false)
 public class UserData {
 
     @Id
@@ -20,7 +22,7 @@ public class UserData {
     @Column(nullable = false, length = 64)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     @JoinTable(name = "userdata_userrole", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<UserRole> roles = new HashSet<>();

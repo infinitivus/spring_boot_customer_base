@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/spareParts")
+@RequestMapping("/parts")
 public class SparePartController {
 
     @Autowired
     private ISparePartService sparePartService;
 
     // Creating a new spare part record ok
-// POST http://localhost:8080/part/create
+// POST http://localhost:8080/parts/create
 //     {"nameSparePart":"PART PART","article":"111234","costPart":"999"}
     @PostMapping("/create")
     public ResponseEntity<String> createSpareParts(@RequestBody SpareParts spareParts) {
@@ -37,7 +37,7 @@ public class SparePartController {
     }
 
     // Output a list of all spare parts about
-//  GET http://localhost:8080/part/getAll
+//  GET http://localhost:8080/parts/getAll
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllSpareParts() {
         ResponseEntity<?> resp;
@@ -53,10 +53,10 @@ public class SparePartController {
         return resp;
     }
 
-    // Output of all sorted spare parts by the name SparePart field is ok
-//  GET http://localhost:8080/part/sort
+    // Output of all sorted spare parts by the name SparePart field
+//  GET http://localhost:8080/parts/sort
     @GetMapping("/sort")
-    public ResponseEntity<?> SortSpareParts() {
+    public ResponseEntity<?> sortSpareParts() {
         ResponseEntity<?> resp;
         try {
             List<SpareParts> parts = sparePartService.sortSpareParts();
@@ -70,8 +70,8 @@ public class SparePartController {
         return resp;
     }
 
-    // Search for spare parts by line (nameSparePart & article) ok
-//  GET  http://localhost:8080/part/search/parts
+    // Search for spare parts by line (nameSparePart & article)
+//  GET  http://localhost:8080/parts/search/parts
     @GetMapping("/search/{line}")
     public ResponseEntity<?> SearchSparePart(@PathVariable String line) {
         ResponseEntity<?> resp;
@@ -87,8 +87,8 @@ public class SparePartController {
         return resp;
     }
 
-    // Deleting a record about a spare part that is not linked to work by id ok
-//DELETE http://localhost:8080/part/remove/1
+    // Deleting a record about a spare part that is not linked to work by id
+//DELETE http://localhost:8080/parts/remove/1
     @DeleteMapping("remove/{id}")
     public ResponseEntity<String> deleteSpareParts(@PathVariable Integer id) {
         ResponseEntity<String> resp;
@@ -104,8 +104,8 @@ public class SparePartController {
         return resp;
     }
 
-    // Changing the spare part data by id ok
-//PATCH http://localhost:8080/part/modify/1
+    // Changing the spare part data by id
+//PATCH http://localhost:8080/parts/modify/1
 //     [{"op":"replace","path":"/nameSparePart","value":"SPARE PART"}]
     @PatchMapping(path = "/modify/{id}")
     public ResponseEntity<String> updatePerson(@PathVariable Integer id, @RequestBody JsonPatch patch) {
@@ -124,7 +124,7 @@ public class SparePartController {
     }
 
     // adding spare parts to work by id
-// POST http://localhost:8080/part/add/1/1
+// POST http://localhost:8080/parts/add/1/1
     @PostMapping(path = "/add/{workId}/{partId}")
     public ResponseEntity<String> addPartToWork(@PathVariable Integer workId, @PathVariable Integer partId) {
         ResponseEntity<String> resp;

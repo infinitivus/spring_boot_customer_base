@@ -30,7 +30,7 @@ public class MobileHome {
     private String model;
 
     @Column(name = "vin")
-    @Length(max = 20,message = "Error! Enter the sample data")
+    @Length(max = 20, message = "Error! Enter the sample data")
     private String vin;
 
     @Column(name = "year_of_release")
@@ -44,8 +44,8 @@ public class MobileHome {
     @OneToOne(mappedBy = "mobileHome")
     private Person homePerson;
 
-    @OneToMany(mappedBy = "mobileHomeRepair", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-//    @JsonManagedReference
+    @JsonManagedReference
+    @OneToMany(mappedBy = "mobileHomeRepair", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RepairWork> repairWorkList;
 
     public MobileHome() {

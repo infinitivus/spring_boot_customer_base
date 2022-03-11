@@ -10,27 +10,27 @@ import java.util.List;
 
 public interface IPersonService {
 
-//@Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
-Person savePerson(Person person);
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MASTER"})
+    Person savePerson(Person person);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MASTER"})
     Person getPerson(Integer id);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MASTER"})
     List<Person> allPerson();
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
-   List<Person> searchPerson(String line);
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MASTER"})
+    List<Person> searchPerson(String line);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER","ROLE_MASTER"})
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_MASTER"})
     List<Person> sortPerson(String field);
 
-//    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN"})
     void deletePerson(Integer id);
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     Person updatePerson(Integer id, JsonPatch patch) throws JsonPatchException, JsonProcessingException;
 
-//    @Secured({"ROLE_ADMIN","ROLE_MANAGER"})
-   Person applyPatchToPerson(JsonPatch patch, Person person) throws JsonPatchException, JsonProcessingException;
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
+    Person applyPatchToPerson(JsonPatch patch, Person person) throws JsonPatchException, JsonProcessingException;
 }

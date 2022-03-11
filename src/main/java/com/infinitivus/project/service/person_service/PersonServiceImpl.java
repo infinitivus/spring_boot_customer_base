@@ -46,7 +46,7 @@ public class PersonServiceImpl implements IPersonService{
 
     @Override
     public List<Person> sortPerson(String field) {
-        return personRepository.findAll();
+        return personRepository.findAll(Sort.by(field));
     }
 
     @Override

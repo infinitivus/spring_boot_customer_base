@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/repairWorks")
+@RequestMapping("/works")
 public class RepairWorkController {
 
     @Autowired
     private IRepairWorkService repairWorkService;
 
     //  Creating a new repair record for a motorhome with id
-// POST http://localhost:8080/repairWorks/create/1
-//     {"nameTheWork":"customer remont", "master":"ALEX", "cost":"999"}
+// POST http://localhost:8080/works/create/1
+//     {"nameTheWork":"customer remont", "master":"ALEX", "costWork":"999"}
     @PostMapping("/create/{homeId}")
     public ResponseEntity<String> createRepairWork(@RequestBody RepairWork repairWork,@PathVariable Integer homeId) {
         ResponseEntity<String> resp;
         try {
-            RepairWork work = repairWorkService.saveRepairWork(repairWork,homeId);
+             repairWorkService.saveRepairWork(repairWork,homeId);
             resp = new ResponseEntity<>(
                     "RepairWork '" + repairWork.getId() + "' created:", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class RepairWorkController {
     }
 
     // Output a list of all repairs
-// GET  http://localhost:8080/repairWorks/getAll
+// GET  http://localhost:8080/works/getAll
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllRepairWork() {
         ResponseEntity<?> resp;
@@ -54,7 +54,7 @@ public class RepairWorkController {
     }
 
     // getting repairs by motorhome id
-// GET http://localhost:8080/repairWorks/getWorks/1
+// GET http://localhost:8080/works/getWorks/1
     @GetMapping("/getWorks/{homeId}")
     public ResponseEntity<?> getRepairWork(@PathVariable Integer homeId) {
         ResponseEntity<?> resp;
@@ -71,7 +71,7 @@ public class RepairWorkController {
     }
 
     // Deleting repair information by id
-//DELETE http://localhost:8080/repairWorks/remove/1
+//DELETE http://localhost:8080/works/remove/1
     @DeleteMapping("remove/{id}")
     public ResponseEntity<String> deleteRepairWork(@PathVariable Integer id) {
         ResponseEntity<String> resp;
@@ -88,7 +88,7 @@ public class RepairWorkController {
     }
 
     //   change of repair data by id
-//PATCH  http://localhost:8080/repairWorks/modify/1
+//PATCH  http://localhost:8080/works/modify/1
 //       [{"op":"replace", "path":"/nameTheWork", "value":"rabota"}]
     @PatchMapping(path = "/modify/{id}")
     public ResponseEntity<String> updateRepairWork(@PathVariable Integer id, @RequestBody JsonPatch patch) {

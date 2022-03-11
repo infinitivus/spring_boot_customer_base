@@ -11,9 +11,11 @@ import com.infinitivus.project.repository.person_repository.IMobileHomeRepositor
 import com.infinitivus.project.repository.person_repository.IRepairWorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class RepairWorkServiceImpl implements IRepairWorkService {
 
@@ -53,10 +55,10 @@ public class RepairWorkServiceImpl implements IRepairWorkService {
 
     @Override
     public void deleteRepairWork(Integer id) {
-        RepairWork repairWork = repairWorkRepository.findById(id).get();
+        RepairWork repairWork = repairWorkRepository.getById(id);
         List<RepairWork> listWork = getRepairWork(repairWork.getMobileHomeRepair().getId());
         listWork.remove(repairWork);
-        repairWorkRepository.delete(repairWork);
+        repairWorkRepository.deleteById(id);
     }
 
     public RepairWork applyPatchToRepairWork(JsonPatch patch, RepairWork repairWork) throws JsonPatchException, JsonProcessingException {

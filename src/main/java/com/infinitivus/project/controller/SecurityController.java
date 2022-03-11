@@ -17,89 +17,89 @@ public class SecurityController {
 
     //Creating a new user with the User role
 // POST http://localhost:8080/registration
-//     {"user":"USER","password":"PASSWORD"}
+//     {"username":"USER","password":"USER"}
     @PostMapping("/registration")
     public ResponseEntity<String> createUser(@RequestBody UserData user) {
-        ResponseEntity<String> resp = null;
+        ResponseEntity<String> resp;
         try {
             Integer id = userService.registrationUser(user);
-            resp = new ResponseEntity<String>(
-                    "User '" + id + "' created", HttpStatus.CREATED); //201
+            resp = new ResponseEntity<>(
+                    "User '" + id + "' created", HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to save user",
-                    HttpStatus.INTERNAL_SERVER_ERROR); //500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
     // Output of all users with roles to the console
-// GET http://localhost:8080/userDatas/getAll
-    @GetMapping("/userDatas/getAll")
+// GET http://localhost:8080/users/getAll
+    @GetMapping("/users/getAll")
     public ResponseEntity<?> getAllUser() {
-        ResponseEntity<?> resp = null;
+        ResponseEntity<?> resp ;
         try {
             List<UserData> list = userService.listAllUser();
-            resp = new ResponseEntity<List<UserData>>(list, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to get all user",
-                    HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
     // getting one user by id
-// GET http://localhost:8080/userDatas/getUser/1
-    @GetMapping("/userDatas/getUser/{id}")
-    public ResponseEntity<?> getOneInvoice(@PathVariable Integer id) {
-        ResponseEntity<?> resp = null;
+// GET http://localhost:8080/users/getUser/1
+    @GetMapping("/users/getUser/{id}")
+    public ResponseEntity<?> getOneUser(@PathVariable Integer id) {
+        ResponseEntity<?> resp ;
         try {
             UserData user = userService.getUser(id);
-            resp = new ResponseEntity<UserData>(user, HttpStatus.OK);//200
+            resp = new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to find user",
-                    HttpStatus.INTERNAL_SERVER_ERROR);//500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }
 
     //   Deleting a user
-//DELETE http://localhost:8080/userDatas/remove/1
-    @DeleteMapping("/userDatas/remove/{id}")
+//DELETE http://localhost:8080/users/remove/1
+    @DeleteMapping("/users/remove/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
-        ResponseEntity<String> resp = null;
+        ResponseEntity<String> resp ;
         try {
             userService.deleteUser(id);
-            resp = new ResponseEntity<String>(
-                    "Users '" + id + "' deleted", HttpStatus.OK);//200
+            resp = new ResponseEntity<>(
+                    "Users '" + id + "' deleted", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to delete user", HttpStatus.INTERNAL_SERVER_ERROR);//500
         }
         return resp;
     }
 
     //  assigning a role to a user by ID
-//PATCH http://localhost:8080/userDatas/modify/3/ROLE_ADMIN
-    @PatchMapping("/userDatas/modify/{id}/{role}")
+//PATCH http://localhost:8080/users/modify/3/ROLE_ADMIN
+    @PatchMapping("/users/modify/{id}/{role}")
     public ResponseEntity<String> modifyUser(@PathVariable Integer id, @PathVariable String role) {
-        ResponseEntity<String> resp = null;
+        ResponseEntity<String> resp ;
         try {
             userService.updateRoleToUser(id, role);
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "User '" + id + "' updated role",
-                    HttpStatus.PARTIAL_CONTENT); //206
+                    HttpStatus.PARTIAL_CONTENT);
         } catch (Exception e) {
             e.printStackTrace();
-            resp = new ResponseEntity<String>(
+            resp = new ResponseEntity<>(
                     "Unable to update user",
-                    HttpStatus.INTERNAL_SERVER_ERROR); //500
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return resp;
     }

@@ -1,7 +1,7 @@
 package com.infinitivus.project.entity.person;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Proxy(lazy = false)
 @Table(name = "repair_work")
 public class RepairWork {
     @Id
@@ -37,12 +38,11 @@ public class RepairWork {
     private String date;
 
     @ManyToOne
-//    @JsonBackReference
+    @JsonBackReference
     @JoinColumn(name = "home_id")
     private MobileHome mobileHomeRepair;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-//    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "parts_work", joinColumns = @JoinColumn(name = "repair_work_id"),
             inverseJoinColumns = @JoinColumn(name = "spare_parts_id"))
     private List<SpareParts> sparePartsList;
@@ -93,6 +93,7 @@ public class RepairWork {
     public void setDate(String date) {
         this.date = date;
     }
+
 
     public MobileHome getMobileHomeRepair() {
         return mobileHomeRepair;
